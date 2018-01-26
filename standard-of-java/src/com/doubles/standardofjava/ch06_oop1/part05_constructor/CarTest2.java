@@ -1,4 +1,4 @@
-package com.doubles.standardofjava.ch06_oop1.part06_constructor;
+package com.doubles.standardofjava.ch06_oop1.part05_constructor;
 
 public class CarTest2 {
     public static void main(String[] args) {
