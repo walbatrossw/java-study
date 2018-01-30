@@ -5,9 +5,11 @@ public class BindingTest {
         Parent parent = new Child();
         Child child = new Child();
 
+        // 조상타입의 참조변수를 사용
         System.out.println("parent.x = " + parent.x);
         parent.method();
 
+        // 자손타입의 참보변수 사용
         System.out.println("child.x = " + child.x);
         child.method();
     }
