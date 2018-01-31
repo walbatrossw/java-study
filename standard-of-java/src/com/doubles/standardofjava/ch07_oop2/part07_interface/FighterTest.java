@@ -3,7 +3,7 @@ package com.doubles.standardofjava.ch07_oop2.part07_interface;
 public class FighterTest {
     public static void main(String[] args) {
         Fighter fighter = new Fighter();
-        if (fighter instanceof Unit)
+        if (fighter instanceof UnitA)
             System.out.println("fighter는 Unit클래스의 자손입니다.");
         if (fighter instanceof Fightable)
             System.out.println("fighter는 Fighter인터페이스를 구현했습니다.");
@@ -16,18 +16,18 @@ public class FighterTest {
     }
 }
 
-class Fighter extends Unit implements Fightable {
+class Fighter extends UnitA implements Fightable {
 
     public void move(int x, int y) {
 
     }
 
-    public void attack(Unit unit) {
+    public void attack(UnitA unit) {
 
     }
 }
 
-class Unit {
+class UnitA {
     int currentHP;
     int x;
     int y;
@@ -42,5 +42,5 @@ interface Moveable {
 }
 
 interface Attackable {
-    void attack(Unit unit);
+    void attack(UnitA unit);
 }
