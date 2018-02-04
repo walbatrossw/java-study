@@ -12,8 +12,12 @@ public class TreeSetEx1 {
         set.add("abc");
         set.add("alien");
         set.add("bat");
+        set.add("boy");
+        set.add("ball");
         set.add("Car");
         set.add("car");
+        set.add("Document");
+        set.add("delivery");
         set.add("disc");
         set.add("dance");
         set.add("dZZZZ");
