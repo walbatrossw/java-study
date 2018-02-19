@@ -2,11 +2,16 @@ package com.doubles.standardofjava.ch06_oop1.part05_constructor;
 
 public class CarTest {
     public static void main(String[] args) {
+
         Car car1 = new Car();
+        System.out.println("car1 :" + car1.color + "/" + car1.gearType + "/" + car1.door);
+
+        // 인스턴스 초기화 작업
         car1.color = "black";
         car1.gearType = "auto";
         car1.door = 4;
 
+        // 인스턴스 생성, 초기화 작업 동시 수행
         Car car2 = new Car("white", "auto", 5);
 
         System.out.println("car1 :" + car1.color + "/" + car1.gearType + "/" + car1.door);
