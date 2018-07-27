@@ -1,6 +1,6 @@
 package com.doubles.standardofjava.ch13_thread;
 
-// 싱글 쓰레드 VS, 멀티 쓰레드
+// 싱글 쓰레드 작업
 public class ThreadEx4 {
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();

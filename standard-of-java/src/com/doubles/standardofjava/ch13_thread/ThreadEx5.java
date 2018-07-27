@@ -1,6 +1,6 @@
 package com.doubles.standardofjava.ch13_thread;
 
-// 
+// 멀티 쓰레드 작업
 public class ThreadEx5 {
 
     static long startTime = 0;
@@ -13,7 +13,7 @@ public class ThreadEx5 {
         for (int i = 0; i < 500; i++) {
             System.out.printf("%s", new String("-"));
         }
-        System.out.print(" 소요시간 1 : " + (System.currentTimeMillis() - ThreadEx5.startTime));
+        System.out.println(" 소요시간 1 : " + (System.currentTimeMillis() - ThreadEx5.startTime));
     }
 
 }
@@ -24,6 +24,6 @@ class ThreadEx5_1 extends Thread {
         for (int i = 0; i < 500; i++) {
             System.out.printf("%s", new String("|"));
         }
-        System.out.print(" 소요시간 2 : " + (System.currentTimeMillis() - ThreadEx5.startTime));
+        System.out.println(" 소요시간 2 : " + (System.currentTimeMillis() - ThreadEx5.startTime));
     }
 }
