@@ -9,6 +9,7 @@ public class ThreadEx1 {
 
         // Runnable을 구현한 클래스의 인스턴스 생성
         Runnable r = new ThreadEx1_2();
+
         // 생성자 Thread(Runnable target)
         Thread t2 = new Thread(r);
 
@@ -23,9 +24,10 @@ public class ThreadEx1 {
 
 }
 
-
+// 쓰레드 상속
 class ThreadEx1_1 extends Thread {
 
+    // run() 메서드 오버라이딩
     public void run() {
         for (int i = 0; i < 5; i++) {
             System.out.println(getName());  // Thread의 getName호출
@@ -34,8 +36,10 @@ class ThreadEx1_1 extends Thread {
 
 }
 
+// Runnable 구현
 class ThreadEx1_2 implements Runnable {
 
+    // run() 추상메서드 구현
     public void run() {
         for (int i = 0; i < 5; i++) {
             // Thread.currentThread() : 현재 실행중인 Tread반환
