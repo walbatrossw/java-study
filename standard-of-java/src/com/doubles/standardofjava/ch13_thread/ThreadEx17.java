@@ -1,41 +1,40 @@
 package com.doubles.standardofjava.ch13_thread;
 
-public class ThreadEx16 {
+public class ThreadEx17 {
     public static void main(String[] args) {
-        RunImplEx16 r1 = new RunImplEx16();
-        RunImplEx16 r2 = new RunImplEx16();
-        RunImplEx16 r3 = new RunImplEx16();
-
-        Thread th1 = new Thread(r1, "*");
-        Thread th2 = new Thread(r2, "**");
-        Thread th3 = new Thread(r3, "***");
-
+        ThreadEx17_1 th1 = new ThreadEx17_1("*");
+        ThreadEx17_1 th2 = new ThreadEx17_1("**");
+        ThreadEx17_1 th3 = new ThreadEx17_1("***");
         th1.start();
         th2.start();
         th3.start();
 
         try {
             Thread.sleep(2000);
-            r1.suspend();
+            th1.suspend();
             Thread.sleep(2000);
-            r2.suspend();
+            th2.suspend();
             Thread.sleep(3000);
-            r1.resume();
+            th1.resume();
             Thread.sleep(3000);
-            r1.stop();
-            r2.stop();
+            th1.stop();
+            th2.stop();
             Thread.sleep(2000);
-            r3.stop();
+            th3.stop();
         } catch (InterruptedException e) {
 
         }
     }
 }
 
-class RunImplEx16 implements Runnable {
-
+class ThreadEx17_1 implements Runnable {
     volatile boolean suspended = false;
     volatile boolean stopped = false;
+    Thread th;
+
+    ThreadEx17_1(String name) {
+        th = new Thread(this, name);
+    }
 
     @Override
     public void run() {
@@ -49,7 +48,7 @@ class RunImplEx16 implements Runnable {
                 }
             }
         }
-        System.out.println(Thread.currentThread().getName() + " - stopped ");
+        System.out.println(Thread.currentThread().getName() + " - stopped");
     }
 
     public void suspend() {
@@ -62,5 +61,9 @@ class RunImplEx16 implements Runnable {
 
     public void stop() {
         stopped = true;
+    }
+
+    public void start() {
+        th.start();
     }
 }
