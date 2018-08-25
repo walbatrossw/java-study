@@ -6,13 +6,12 @@ public class ThreadWaitEx2 {
 
     public static void main(String[] args) {
         Table2 table = new Table2();
-
         new Thread(new Cook2(table), "COOK1").start();
         new Thread(new Customer2(table, "donut"), "CUST1").start();
-        new Thread(new Customer2(table, "donut"), "CUST2").start();
+        new Thread(new Customer2(table, "burger"), "CUST2").start();
 
         try {
-            Thread.sleep(100);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
 
         }
@@ -21,6 +20,7 @@ public class ThreadWaitEx2 {
 
 }
 
+// 손님 클래스
 class Customer2 implements Runnable {
 
     private Table2 table;
@@ -43,7 +43,7 @@ class Customer2 implements Runnable {
             if (eatFood()) {
                 System.out.println(name + " ate a " + food);
             } else {
-                System.out.println(name + " failed to eat. ");
+                System.out.println(name + " failed to eat.");
             }
         }
     }
@@ -51,9 +51,9 @@ class Customer2 implements Runnable {
     private boolean eatFood() {
         return table.remove(food);
     }
-
 }
 
+// 요리사 클래스
 class Cook2 implements Runnable {
 
     private Table2 table;
@@ -68,7 +68,7 @@ class Cook2 implements Runnable {
             int idx = (int) (Math.random() * table.dishNum());
             table.add(table.dishNames[idx]);
             try {
-                Thread.sleep(1);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
 
             }
@@ -76,6 +76,7 @@ class Cook2 implements Runnable {
     }
 }
 
+// 테이블 클래스
 class Table2 {
 
     String[] dishNames = {"donut", "donut", "burger"};
@@ -83,7 +84,8 @@ class Table2 {
 
     private ArrayList<String> dishes = new ArrayList<>();
 
-    public void add(String dish) {
+    // 음식 추가, 동기화
+    public synchronized void add(String dish) {
         if (dishes.size() >= MAX_FOOD) {
             return;
         }
@@ -91,16 +93,28 @@ class Table2 {
         System.out.println("Dishes : " + dishes.toString());
     }
 
-    public boolean remove(String dishName) {
+    // 음식 제거
+    public boolean remove(String dishNames) {
+        // 동기화
+        synchronized (this) {
+            while (dishes.size() == 0) {
+                String name = Thread.currentThread().getName();
+                System.out.println(name + " is waiting.");
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
 
-        for (int i = 0; i < dishes.size(); i++) {
-            if (dishName.equals(dishes.get(i))) {
-                dishes.remove(i);
-                return true;
+                }
             }
-        }
-        return false;
 
+            for (int i = 0; i < dishes.size(); i++) {
+                if (dishNames.equals(dishes.get(i))) {
+                    dishes.remove(i);
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
     public int dishNum() {
