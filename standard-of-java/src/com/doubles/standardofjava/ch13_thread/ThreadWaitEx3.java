@@ -3,6 +3,7 @@ package com.doubles.standardofjava.ch13_thread;
 import java.util.ArrayList;
 
 public class ThreadWaitEx3 {
+
     public static void main(String[] args) {
         Table3 table = new Table3();
         new Thread(new Cook3(table), "COOK1").start();
@@ -16,9 +17,11 @@ public class ThreadWaitEx3 {
         }
         System.exit(0);
     }
+
 }
 
 class Customer3 implements Runnable {
+
     private Table3 table;
     private String food;
 
@@ -40,9 +43,11 @@ class Customer3 implements Runnable {
             System.out.println(name + " ate a " + food);
         }
     }
+
 }
 
 class Cook3 implements Runnable {
+
     private Table3 table;
 
     public Cook3(Table3 table) {

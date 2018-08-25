@@ -9,7 +9,7 @@ public class ThreadWaitEx1 {
 
         new Thread(new Cook(table), "COOK1").start();
         new Thread(new Customer(table, "donut"), "CUST1").start();
-        new Thread(new Customer(table, "donut"), "CUST2").start();
+        new Thread(new Customer(table, "burger"), "CUST2").start();
 
         try {
             Thread.sleep(100);
