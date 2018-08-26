@@ -5,7 +5,9 @@ import java.util.ArrayList;
 public class ThreadWaitEx3 {
 
     public static void main(String[] args) {
-        Table3 table = new Table3();
+
+        Table3 table = new Table3(); // 여러 쓰레드가 공유하는 객체
+
         new Thread(new Cook3(table), "COOK1").start();
         new Thread(new Customer3(table, "donut"), "CUST1").start();
         new Thread(new Customer3(table, "donut"), "CUST2").start();
@@ -20,6 +22,7 @@ public class ThreadWaitEx3 {
 
 }
 
+// 손님 클래스
 class Customer3 implements Runnable {
 
     private Table3 table;
@@ -46,6 +49,7 @@ class Customer3 implements Runnable {
 
 }
 
+// 요리사 클래스
 class Cook3 implements Runnable {
 
     private Table3 table;
@@ -57,6 +61,7 @@ class Cook3 implements Runnable {
     @Override
     public void run() {
         while (true) {
+            // 임의의 요리를 선택해서 table에 추가
             int idx = (int) (Math.random() * table.dishNum());
             table.add(table.dishNames[idx]);
             try {
@@ -68,9 +73,13 @@ class Cook3 implements Runnable {
     }
 }
 
+// 테이블 클래스
 class Table3 {
+
+    // donut이 더 자주 나옴
     String[] dishNames = {"donut", "donut", "burger"};
     final int MAX_FOOD = 6;
+
     private ArrayList<String> dishes = new ArrayList<>();
 
     public synchronized void add(String dish) {
@@ -78,14 +87,14 @@ class Table3 {
             String name = Thread.currentThread().getName();
             System.out.println(name + " is waiting.");
             try {
-                wait();
+                wait(); // COOK 쓰레드를 기다리게 함
                 Thread.sleep(500);
             } catch (InterruptedException e) {
 
             }
         }
         dishes.add(dish);
-        notify();
+        notify();   // 기다리는 CUST 쓰레드를 깨우기 위함
         System.out.println("Dishes : " + dishes.toString());
     }
 
@@ -95,7 +104,7 @@ class Table3 {
             while (dishes.size() == 0) {
                 System.out.println(name + " is waiting.");
                 try {
-                    wait();
+                    wait(); // CUST쓰레드를 기다리게 함
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
 
@@ -106,14 +115,14 @@ class Table3 {
                 for (int i = 0; i < dishes.size(); i++) {
                     if (dishName.equals(dishes.get(i))) {
                         dishes.remove(i);
-                        notify();
+                        notify();  // 잠자는 COOK쓰레드를 깨우기 위함
                         return;
                     }
                 }
 
                 try {
                     System.out.println(name + " is waiting.");
-                    wait();
+                    wait(); // 원하는 음식이 없을 경우 CUST쓰레드를 기다리게 함
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
 
